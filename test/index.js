@@ -2,7 +2,7 @@
 
 const path = require('path');
 const expect = require('chai').expect;
-const introduce = require('..');
+const introduce = require('../index')();
 
 suite('introduce');
 
@@ -47,5 +47,18 @@ test('parent dir relative', function prel(done) {
 
   const bar = introduce('./lib/subdir/bar');
   expect(bar).to.equal('bar');
+  done();
+});
+
+test('includes within includes work', function includes(done) {
+  const inc = introduce('lib', 'includes');
+  expect(inc.bar).to.equal('bar');
+  done();
+});
+
+
+test('yo dawg i heard you like includes', function yodawg(done) {
+  const inc = introduce('lib', 'includes');
+  expect(inc.subinc).to.equal('bar');
   done();
 });

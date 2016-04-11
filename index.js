@@ -2,8 +2,8 @@
 
 const path = require('path');
 
-module.exports = function introduce() {
-  const parentDir = path.dirname(module.parent.filename);
+function introduce() {
+  const parentDir = (this) ? this : path.dirname(module.parent.filename);
   const inArgs = Array.from(arguments);
   const args = (Array.isArray(inArgs[0])) ? inArgs[0] : inArgs;
   let splitArgs = [];
@@ -25,4 +25,8 @@ module.exports = function introduce() {
       path.join.apply(null, finalArgs.filter((item) => item.length > 0))
     )
   );
+}
+
+module.exports = function init(basedir) {
+  return introduce.bind(basedir);
 };
